@@ -37,13 +37,6 @@ jobs:
         go get golang.org/x/lint/golint
         go get honnef.co/go/tools/cmd/staticcheck
         go get -d ./...
-
-    - name: Lint
-      run: |
-        export GOPATH=/home/runner/work
-        export PATH=$PATH:$GOPATH/bin
-        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
-        cd $NEW
         ./scripts/licensecheck.sh
         go build -v -tags=gofuzz ./...
         go vet ./...
@@ -51,24 +44,10 @@ jobs:
         ./scripts/golint.sh
         staticcheck ./...
         golint -set_exit_status ./cmd/... ./internal/...
-
-    - name: Test
-      run: |
-        export GOPATH=/home/runner/work
-        export PATH=$PATH:$GOPATH/bin
-        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
-        cd $NEW
         go test -v -race ./ovsnl/
         go test -v -race ./ovsb/
         go test -v -race ./ovsdb/
         go test -c -race ./ovsdb
         sudo ./ovsdb.test -test.v
-
-    - name: Security scan
-      run: |
-        export GOPATH=/home/runner/work
-        export PATH=$PATH:$GOPATH/bin
-        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
-        cd $NEW
         go install github.com/praetorian-inc/gokart@latest
         gokart scan

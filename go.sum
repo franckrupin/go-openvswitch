@@ -1,7 +1,5 @@
 github.com/cilium/ebpf v0.5.0/go.mod h1:4tRaxcgiL706VnOzHOdBlY8IEAIdxINsQBcU4xJJXRs=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/digitalocean/go-openvswitch v0.0.0-20210610204619-e0e0c7890c6b h1:cXK4GT0m69kKQ9s00bOGnID6llnfreCKNKCVuToL+Vw=
-github.com/digitalocean/go-openvswitch v0.0.0-20210610204619-e0e0c7890c6b/go.mod h1:MpzfscrezUxa94/T4sy2tDaxB+hQ6w0EmRBPv+xHWEs=
 github.com/frankban/quicktest v1.11.3/go.mod h1:wRf/ReqHper53s+kmmSZizM8NamnL3IM0I9ntUbOk+k=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
 github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
