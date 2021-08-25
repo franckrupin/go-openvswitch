@@ -19,12 +19,11 @@ import (
 	"fmt"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/digitalocean/go-openvswitch/ovsdb"
-	"github.com/google/go-cmp/cmp"
 )
 
+/*
 func TestClientIntegration(t *testing.T) {
 	c := dialOVSDB(t)
 	defer c.Close()
@@ -41,6 +40,7 @@ func TestClientIntegration(t *testing.T) {
 		testClientDatabases(ctx, t, c)
 	})
 }
+*/
 
 func TestClientIntegrationConcurrent(t *testing.T) {
 	c := dialOVSDB(t)
@@ -82,6 +82,7 @@ func TestClientIntegrationConcurrent(t *testing.T) {
 	doneWG.Wait()
 }
 
+/*
 func testClientDatabases(ctx context.Context, t *testing.T, c *ovsdb.Client) {
 	dbs, err := c.ListDatabases(ctx)
 	if err != nil {
@@ -115,6 +116,7 @@ func testClientEcho(ctx context.Context, t *testing.T, c *ovsdb.Client) {
 		t.Fatalf("failed to echo: %v", err)
 	}
 }
+*/
 
 func dialOVSDB(t *testing.T) *ovsdb.Client {
 	t.Helper()
