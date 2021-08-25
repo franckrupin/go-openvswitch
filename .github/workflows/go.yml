@@ -16,36 +16,59 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16
+        go-version: 1.17
 
     - name: OVS setup
       run: |
         sudo apt install openvswitch-switch
         sudo ovs-vsctl add-br ovsbr0
         
-    - name: Get tooling
+    - name: Setup enivronment
       run: |
+        export GOPATH=/home/runner/work
+        export PATH=$PATH:$GOPATH/bin
+        mkdir $GOPATH/src $GOPATH/pkg $GOPATH/bin
+        go install honnef.co/go/tools/cmd/staticcheck@latest
+        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
+        mkdir -p $NEW
+        cp -r ./* $NEW
+        cd $NEW
         go mod download
         go get golang.org/x/lint/golint
         go get honnef.co/go/tools/cmd/staticcheck
-        
-    - name: License check
-      run: ./scripts/licensecheck.sh
-        
-    - name: Build
-      run: go build -v -tags=gofuzz ./...
+        go get -d ./...
 
-    - name: vet
-      run: go vet ./...
-
-    - name: staticcheck
-      run: staticcheck ./...
-
-    - name: lint
-      run: golint -set_exit_status ./cmd/... ./internal/...
+    - name: Lint
+      run: |
+        export GOPATH=/home/runner/work
+        export PATH=$PATH:$GOPATH/bin
+        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
+        cd $NEW
+        ./scripts/licensecheck.sh
+        go build -v -tags=gofuzz ./...
+        go vet ./...
+        ./scripts/gofmt.sh
+        ./scripts/golint.sh
+        staticcheck ./...
+        golint -set_exit_status ./cmd/... ./internal/...
 
     - name: Test
       run: |
-        go test -v -race ./...
+        export GOPATH=/home/runner/work
+        export PATH=$PATH:$GOPATH/bin
+        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
+        cd $NEW
+        go test -v -race ./ovsnl/
+        go test -v -race ./ovsb/
+        go test -v -race ./ovsdb/
         go test -c -race ./ovsdb
         sudo ./ovsdb.test -test.v
+
+    - name: Security scan
+      run: |
+        export GOPATH=/home/runner/work
+        export PATH=$PATH:$GOPATH/bin
+        NEW=$GOPATH/src/github.com/digitalocean/go-openvswitch
+        cd $NEW
+        go install github.com/praetorian-inc/gokart@latest
+        gokart scan
