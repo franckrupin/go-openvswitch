@@ -1,0 +1,56 @@
+name: Go
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: OVS setup
+      run: |
+        sudo apt install openvswitch-switch
+        sudo ovs-vsctl add-br ovsbr0
+        
+    - name: Get tooling
+      run: |
+        #export GOPATH=/home/runner/work
+        NEW=$GOPATH/github.com/digitalocean/go-openvswitch
+        sudo mkdir -p $NEW
+        sudo cp -r ./* $NEW
+        sudo cd $NEW
+        sudo go get golang.org/x/lint/golint
+        sudo go get honnef.co/go/tools/cmd/staticcheck
+        sudo go get -d ./...
+        
+    - name: License check
+      run: ./scripts/licensecheck.sh
+        
+    - name: Build
+      run: go build -v -tags=gofuzz ./...
+
+    - name: vet
+      run: go vet ./...
+
+    - name: staticcheck
+      run: staticcheck ./...
+
+    - name: lint
+      run: golint -set_exit_status ./cmd/... ./internal/...
+
+    - name: Test
+      run: |
+        go test -v -race ./...
+        go test -c -race ./ovsdb
+        sudo ./ovsdb.test -test.v
