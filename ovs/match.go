@@ -27,10 +27,10 @@ const (
 	source      = "src"
 	destination = "dst"
 
-	sourceHardwareAddr = "sha"
-	targetHardwareAddr = "tha"
-	sourceProtocolAddr = "spa"
-	targetProtocolAddr = "tpa"
+	//sourceHardwareAddr = "sha"
+	//targetHardwareAddr = "tha"
+	//sourceProtocolAddr = "spa"
+	//targetProtocolAddr = "tpa"
 )
 
 // Constants of full Match names.

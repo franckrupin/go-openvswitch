@@ -55,7 +55,8 @@ func TestClientIntegrationConcurrent(t *testing.T) {
 	doneWG.Add(n)
 
 	// Block all goroutines until they're done spinning up.
-	sigC := make(chan struct{}, 0)
+	//sigC := make(chan struct{}, 0)
+	sigC := make(chan struct{})
 
 	for i := 0; i < n; i++ {
 		go func(c *ovsdb.Client) {
