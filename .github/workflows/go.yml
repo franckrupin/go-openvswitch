@@ -42,9 +42,9 @@ jobs:
         go vet ./...
         staticcheck ./...
         golint -set_exit_status ./cmd/... ./internal/...
-        go test -v -race ./ovsnl/
-        go test -v -race ./ovsb/
+        go test -v -race ./ovs/
         go test -v -race ./ovsdb/
+        go test -v -race ./ovsnl/
         go test -c -race ./ovsdb
         sudo ./ovsdb.test -test.v
         go install github.com/praetorian-inc/gokart@latest
