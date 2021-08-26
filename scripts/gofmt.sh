@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Verify that all files are correctly gofmt'd, with the exception of
 # generated code.
