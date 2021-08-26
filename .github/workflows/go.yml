@@ -43,8 +43,10 @@ jobs:
         go build -v -tags=gofuzz ./...
         echo "=========START VET============"
         go vet ./...
-        echo "=========START GOFMT CHECK============"
+        echo "=========START GO FMT CHECK============"
         ./scripts/gofmt.sh
+        echo "=========START GO LINT CHECK============"
+        ./scripts/golint.sh
         echo "=========START STATICCHECK============"
         staticcheck ./...
         echo "=========START LINT============"
