@@ -87,7 +87,6 @@ func testClientDatabases(ctx context.Context, t *testing.T, c *ovsdb.Client) {
 	if err != nil {
 		t.Fatalf("failed to list databases: %v", err)
 	}
-	t.Logf("----- GET DBS: %v", dbs)
 
 	want := []string{"Open_vSwitch", "_Server"}
 
