@@ -89,7 +89,7 @@ func testClientDatabases(ctx context.Context, t *testing.T, c *ovsdb.Client) {
 	}
 	t.Logf("----- GET DBS: %v", dbs)
 
-	want := []string{"Open_vSwitch"}
+	want := []string{"Open_vSwitch", "_Server"}
 
 	if diff := cmp.Diff(want, dbs); diff != "" {
 		t.Fatalf("unexpected databases (-want +got):\n%s", diff)
